@@ -6,93 +6,60 @@
 <title>Forex Simulator</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: -apple-system, "Segoe UI", Roboto, monospace;
-    background:#0a0e17; color:#e2e8f0; min-height:100vh; padding:12px;
-  }
+  body { font-family: -apple-system, "Segoe UI", Roboto, monospace;
+    background:#0a0e17; color:#e2e8f0; min-height:100vh; padding:12px; }
   .wrap { max-width:900px; margin:0 auto; }
-
-  header {
-    display:flex; justify-content:space-between; align-items:center;
+  header { display:flex; justify-content:space-between; align-items:center;
     padding:14px 16px; background:#131824; border:1px solid #1f2937;
-    border-radius:14px; margin-bottom:12px;
-    flex-wrap:wrap; gap:8px;
-  }
+    border-radius:14px; margin-bottom:12px; flex-wrap:wrap; gap:8px; }
   .logo { font-weight:800; color:#38bdf8; font-size:15px; letter-spacing:.5px; }
+  .userline { font-size:11px; color:#94a3b8; margin-top:4px; }
+  .userline a { color:#f87171; text-decoration:none; font-weight:600; }
   .acct { text-align:right; font-size:11px; color:#94a3b8; }
   .acct .bal { font-size:18px; font-weight:700; color:#e2e8f0; display:block; }
   .acct .eq { color:#38bdf8; font-weight:600; }
-
-  .section {
-    background:#131824; border:1px solid #1f2937; border-radius:14px;
-    padding:14px; margin-bottom:12px;
-  }
-  .section h2 {
-    font-size:11px; text-transform:uppercase; letter-spacing:2px;
-    color:#94a3b8; margin-bottom:12px; font-weight:700;
-  }
-
-  .market-row {
-    display:grid; grid-template-columns: 1fr auto auto;
+  .section { background:#131824; border:1px solid #1f2937; border-radius:14px;
+    padding:14px; margin-bottom:12px; }
+  .section h2 { font-size:11px; text-transform:uppercase; letter-spacing:2px;
+    color:#94a3b8; margin-bottom:12px; font-weight:700; }
+  .market-row { display:grid; grid-template-columns: 1fr auto auto;
     gap:8px; align-items:center; padding:10px 8px;
-    border-bottom:1px solid #1f2937; cursor:pointer;
-    transition: background .15s;
-  }
+    border-bottom:1px solid #1f2937; cursor:pointer; }
   .market-row:last-child { border-bottom:none; }
-  .market-row:hover { background:#1a2131; }
   .market-row.selected { background:#1e3a5f; }
   .pair-name { font-weight:700; font-size:13px; }
   .pair-price { font-variant-numeric: tabular-nums; font-size:14px; font-weight:600; }
   .pair-change { font-size:11px; text-align:right; }
   .up { color:#22c55e; }
   .down { color:#ef4444; }
-
   .trade-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
   .trade-grid input { grid-column: span 2; }
-  input, select {
-    background:#0a0e17; border:1px solid #374151; color:#e2e8f0;
-    padding:12px; border-radius:10px; font-size:14px; outline:none;
-    font-family:inherit;
-  }
-  input:focus, select:focus { border-color:#38bdf8; }
-  .btn {
-    padding:14px; border:none; border-radius:10px; font-weight:800;
-    font-size:14px; cursor:pointer; letter-spacing:.5px; font-family:inherit;
-  }
-  .btn-buy  { background:#22c55e; color:#052e16; }
-  .btn-buy:active { background:#16a34a; }
+  input, select { background:#0a0e17; border:1px solid #374151; color:#e2e8f0;
+    padding:12px; border-radius:10px; font-size:14px; outline:none; font-family:inherit; }
+  input:focus { border-color:#38bdf8; }
+  .btn { padding:14px; border:none; border-radius:10px; font-weight:800;
+    font-size:14px; cursor:pointer; font-family:inherit; }
+  .btn-buy { background:#22c55e; color:#052e16; }
   .btn-sell { background:#ef4444; color:#450a0a; }
-  .btn-sell:active { background:#dc2626; }
-
   table { width:100%; border-collapse:collapse; font-size:12px; }
-  th, td {
-    text-align:left; padding:8px 6px;
-    border-bottom:1px solid #1f2937;
-    font-variant-numeric: tabular-nums;
-  }
+  th, td { text-align:left; padding:8px 6px; border-bottom:1px solid #1f2937;
+    font-variant-numeric: tabular-nums; }
   th { color:#64748b; font-weight:600; font-size:10px; text-transform:uppercase; letter-spacing:1px; }
-  .tag-buy  { color:#22c55e; font-weight:700; }
+  .tag-buy { color:#22c55e; font-weight:700; }
   .tag-sell { color:#ef4444; font-weight:700; }
-  .close-btn {
-    background:#1f2937; color:#f87171; border:none;
-    padding:6px 10px; border-radius:6px; font-size:11px;
-    cursor:pointer; font-weight:700; font-family:inherit;
-  }
-  .close-btn:active { background:#334155; }
-
+  .close-btn { background:#1f2937; color:#f87171; border:none;
+    padding:6px 10px; border-radius:6px; font-size:11px; cursor:pointer;
+    font-weight:700; font-family:inherit; }
   .empty { color:#475569; font-size:12px; text-align:center; padding:16px; }
-  .reset-btn {
-    background:transparent; border:1px solid #374151; color:#94a3b8;
-    padding:6px 12px; border-radius:8px; font-size:11px;
-    cursor:pointer; font-family:inherit; font-weight:600;
-  }
-  .pos-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px; }
-  .toast {
-    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+  .reset-btn { background:transparent; border:1px solid #374151; color:#94a3b8;
+    padding:6px 12px; border-radius:8px; font-size:11px; cursor:pointer;
+    font-family:inherit; font-weight:600; }
+  .pos-header { display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:12px; flex-wrap:wrap; gap:8px; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
     background:#1e293b; color:#e2e8f0; padding:10px 20px; border-radius:10px;
     font-size:13px; opacity:0; transition:opacity .3s; pointer-events:none;
-    border:1px solid #334155;
-  }
+    border:1px solid #334155; }
   .toast.show { opacity:1; }
   @media(min-width:700px) {
     .trade-grid { grid-template-columns: 1fr 1fr 1fr; }
@@ -104,7 +71,10 @@
 <div class="wrap">
 
   <header>
-    <div class="logo">◉ FX SIMULATOR</div>
+    <div>
+      <div class="logo">&#9673; FX SIMULATOR</div>
+      <div class="userline">&#128100; {{ user.username }} &middot; <a href="/logout">Logout</a></div>
+    </div>
     <div class="acct">
       Balance: <span class="bal" id="balance">$10,000.00</span>
       Equity: <span class="eq" id="equity">$10,000.00</span>
@@ -120,12 +90,12 @@
   <div class="section">
     <h2>Place Order - <span id="selectedPair">EUR/USD</span></h2>
     <div class="trade-grid">
-      <input type="number" id="lots" value="0.10" min="0.01" max="10" step="0.01" placeholder="Lots">
-      <button class="btn btn-buy"  onclick="trade('BUY')">BUY</button>
+      <input type="number" id="lots" value="0.10" min="0.01" max="10" step="0.01">
+      <button class="btn btn-buy" onclick="trade('BUY')">BUY</button>
       <button class="btn btn-sell" onclick="trade('SELL')">SELL</button>
     </div>
     <div style="font-size:11px;color:#64748b;text-align:center;">
-      1 lot = 100,000 units - P&L updates live every second
+      1 lot = 100,000 units - P&L updates live
     </div>
   </div>
 
@@ -148,94 +118,78 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  let selected = "EUR/USD";
-  let prevPrices = {};
+  var selected = "EUR/USD";
+  var prevPrices = {};
 
   function fmt(n, d) { d = d || 2; return Number(n).toFixed(d); }
 
   async function refresh() {
     try {
-      const r = await fetch('/api/state');
-      const s = await r.json();
-
+      var r = await fetch('/api/state');
+      var s = await r.json();
       document.getElementById('balance').textContent = '$' + fmt(s.balance);
-      document.getElementById('equity').textContent  = '$' + fmt(s.equity);
+      document.getElementById('equity').textContent = '$' + fmt(s.equity);
 
-      const m = document.getElementById('market');
-      m.innerHTML = Object.entries(s.prices).map(function(entry) {
-        const pair = entry[0], price = entry[1];
-        const prev = prevPrices[pair] !== undefined ? prevPrices[pair] : price;
-        const cls = price > prev ? 'up' : price < prev ? 'down' : '';
-        const arrow = price > prev ? '▲' : price < prev ? '▼' : '·';
-        const decimals = (pair.indexOf('JPY') > -1 || pair.indexOf('KES') > -1) ? 3 : 5;
-        return '<div class="market-row ' + (pair===selected?'selected':'') + '" onclick="selectPair(\'' + pair + '\')">' +
+      var m = document.getElementById('market');
+      m.innerHTML = Object.entries(s.prices).map(function(e) {
+        var pair = e[0], price = e[1];
+        var prev = prevPrices[pair] !== undefined ? prevPrices[pair] : price;
+        var cls = price > prev ? 'up' : price < prev ? 'down' : '';
+        var arrow = price > prev ? '&#9650;' : price < prev ? '&#9660;' : '.';
+        var dec = (pair.indexOf('JPY') > -1 || pair.indexOf('KES') > -1) ? 3 : 5;
+        return '<div class="market-row ' + (pair===selected?'selected':'') +
+          '" onclick="selectPair(\'' + pair + '\')">' +
           '<div class="pair-name">' + pair + '</div>' +
-          '<div class="pair-price">' + price.toFixed(decimals) + '</div>' +
-          '<div class="pair-change ' + cls + '">' + arrow + '</div>' +
-        '</div>';
+          '<div class="pair-price">' + price.toFixed(dec) + '</div>' +
+          '<div class="pair-change ' + cls + '">' + arrow + '</div></div>';
       }).join('');
       Object.assign(prevPrices, s.prices);
 
       document.getElementById('posCount').textContent = s.positions.length;
-      const float = document.getElementById('floatPnl');
-      float.textContent = (s.floating_pnl >= 0 ? '+$' : '-$') + fmt(Math.abs(s.floating_pnl));
-      float.className = s.floating_pnl >= 0 ? 'up' : 'down';
+      var fl = document.getElementById('floatPnl');
+      fl.textContent = (s.floating_pnl >= 0 ? '+$' : '-$') + fmt(Math.abs(s.floating_pnl));
+      fl.className = s.floating_pnl >= 0 ? 'up' : 'down';
 
-      const pdiv = document.getElementById('positions');
+      var pdiv = document.getElementById('positions');
       if (!s.positions.length) {
         pdiv.innerHTML = '<div class="empty">No open positions</div>';
       } else {
-        pdiv.innerHTML = '<table><thead><tr>' +
-          '<th>Pair</th><th>Dir</th><th>Lots</th><th>Entry</th><th>Current</th><th>P&L</th><th></th>' +
-          '</tr></thead><tbody>' +
+        pdiv.innerHTML = '<table><thead><tr><th>Pair</th><th>Dir</th><th>Lots</th>' +
+          '<th>Entry</th><th>Current</th><th>P&L</th><th></th></tr></thead><tbody>' +
           s.positions.map(function(p) {
-            const decimals = (p.pair.indexOf('JPY') > -1 || p.pair.indexOf('KES') > -1) ? 3 : 5;
-            return '<tr>' +
-              '<td>' + p.pair + '</td>' +
+            var dec = (p.pair.indexOf('JPY') > -1 || p.pair.indexOf('KES') > -1) ? 3 : 5;
+            return '<tr><td>' + p.pair + '</td>' +
               '<td class="tag-' + p.direction.toLowerCase() + '">' + p.direction + '</td>' +
               '<td>' + fmt(p.lots,2) + '</td>' +
-              '<td>' + p.entry.toFixed(decimals) + '</td>' +
-              '<td>' + p.current.toFixed(decimals) + '</td>' +
+              '<td>' + p.entry.toFixed(dec) + '</td>' +
+              '<td>' + p.current.toFixed(dec) + '</td>' +
               '<td class="' + (p.pnl>=0?'up':'down') + '">' + (p.pnl>=0?'+':'') + '$' + fmt(p.pnl) + '</td>' +
-              '<td><button class="close-btn" onclick="closePos(' + p.id + ')">CLOSE</button></td>' +
-            '</tr>';
-          }).join('') +
-          '</tbody></table>';
+              '<td><button class="close-btn" onclick="closePos(' + p.id + ')">CLOSE</button></td></tr>';
+          }).join('') + '</tbody></table>';
       }
 
-      const hdiv = document.getElementById('history');
+      var hdiv = document.getElementById('history');
       if (!s.history.length) {
         hdiv.innerHTML = '<div class="empty">No trades yet</div>';
       } else {
-        hdiv.innerHTML = '<table><thead><tr>' +
-          '<th>Time</th><th>Pair</th><th>Dir</th><th>Lots</th><th>Entry</th><th>Exit</th><th>P&L</th>' +
-          '</tr></thead><tbody>' +
+        hdiv.innerHTML = '<table><thead><tr><th>Time</th><th>Pair</th><th>Dir</th>' +
+          '<th>Lots</th><th>Entry</th><th>Exit</th><th>P&L</th></tr></thead><tbody>' +
           s.history.map(function(h) {
-            return '<tr>' +
-              '<td>' + h.closed + '</td>' +
-              '<td>' + h.pair + '</td>' +
+            return '<tr><td>' + h.closed + '</td><td>' + h.pair + '</td>' +
               '<td class="tag-' + h.direction.toLowerCase() + '">' + h.direction + '</td>' +
               '<td>' + fmt(h.lots,2) + '</td>' +
               '<td>' + h.entry.toFixed(5) + '</td>' +
               '<td>' + h.exit.toFixed(5) + '</td>' +
-              '<td class="' + (h.pnl>=0?'up':'down') + '">' + (h.pnl>=0?'+':'') + '$' + fmt(h.pnl) + '</td>' +
-            '</tr>';
-          }).join('') +
-          '</tbody></table>';
+              '<td class="' + (h.pnl>=0?'up':'down') + '">' + (h.pnl>=0?'+':'') + '$' + fmt(h.pnl) + '</td></tr>';
+          }).join('') + '</tbody></table>';
       }
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) { console.error(e); }
   }
 
-  function selectPair(p) {
-    selected = p;
-    document.getElementById('selectedPair').textContent = p;
-    refresh();
-  }
+  function selectPair(p) { selected = p; document.getElementById('selectedPair').textContent = p; refresh(); }
 
   function toast(msg, ok) {
-    const t = document.getElementById('toast');
+    var t = document.getElementById('toast');
     t.textContent = msg;
     t.style.borderColor = ok ? '#22c55e' : '#ef4444';
     t.classList.add('show');
@@ -243,28 +197,27 @@
   }
 
   async function trade(dir) {
-    const lots = parseFloat(document.getElementById('lots').value);
-    const r = await fetch('/api/trade', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+    var lots = parseFloat(document.getElementById('lots').value);
+    var r = await fetch('/api/trade', {
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({pair:selected, direction:dir, lots:lots}),
     });
-    const d = await r.json();
+    var d = await r.json();
     if (d.error) { toast(d.error, false); return; }
-    toast(dir + ' ' + lots + ' ' + selected + ' @ ' + d.position.entry, true);
+    toast(dir + ' ' + lots + ' ' + selected, true);
     refresh();
   }
 
   async function closePos(id) {
-    const r = await fetch('/api/close/' + id, {method:'POST'});
-    const d = await r.json();
+    var r = await fetch('/api/close/' + id, {method:'POST'});
+    var d = await r.json();
     if (d.error) { toast(d.error, false); return; }
     toast('Closed. P&L: ' + (d.pnl>=0?'+':'') + '$' + d.pnl, d.pnl>=0);
     refresh();
   }
 
   async function resetAcct() {
-    if (!confirm('Reset account to $10,000?')) return;
+    if (!confirm('Reset account to $10,000? All trades will be deleted.')) return;
     await fetch('/api/reset', {method:'POST'});
     toast('Account reset', true);
     refresh();

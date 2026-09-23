@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - FX Simulator</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    background:#0a0e17; color:#e2e8f0; min-height:100vh;
+    display:flex; align-items:center; justify-content:center; padding:20px; }
+  .card { background:#131824; border:1px solid #1f2937; border-radius:16px;
+    padding:32px 24px; width:100%; max-width:380px; }
+  h1 { color:#38bdf8; font-size:22px; margin-bottom:6px; text-align:center; }
+  .sub { color:#94a3b8; font-size:12px; text-align:center; margin-bottom:24px; }
+  label { display:block; font-size:11px; text-transform:uppercase; letter-spacing:1.5px;
+    color:#94a3b8; margin-bottom:6px; margin-top:14px; font-weight:700; }
+  input { width:100%; background:#0a0e17; border:1px solid #374151; color:#e2e8f0;
+    padding:12px; border-radius:10px; font-size:14px; outline:none; }
+  input:focus { border-color:#38bdf8; }
+  button { width:100%; margin-top:20px; padding:14px; border:none; border-radius:10px;
+    background:#38bdf8; color:#0a0e17; font-weight:800; font-size:14px;
+    cursor:pointer; letter-spacing:.5px; }
+  button:active { background:#0ea5e9; }
+  .flash { background:#7f1d1d; color:#fecaca; padding:10px; border-radius:8px;
+    font-size:12px; margin-bottom:14px; text-align:center; }
+  .link { text-align:center; margin-top:16px; font-size:13px; color:#94a3b8; }
+  .link a { color:#38bdf8; text-decoration:none; font-weight:600; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>&#9673; FX SIMULATOR</h1>
+    <div class="sub">Create your trading account</div>
+    {% with msgs = get_flashed_messages() %}
+      {% for m in msgs %}<div class="flash">{{ m }}</div>{% endfor %}
+    {% endwith %}
+    <form method="POST">
+      <label>Username</label>
+      <input name="username" required autofocus minlength="3" maxlength="30">
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label>Password</label>
+      <input type="password" name="password" required minlength="6">
+      <button type="submit">Create Account</button>
+    </form>
+    <div class="link">Already have an account? <a href="/login">Sign in</a></div>
+  </div>
+</body>
+</html>
