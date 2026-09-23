@@ -3,6 +3,4 @@ flask-login
 flask-sqlalchemy
 gunicorn
 requests
-psycopg2-binaryflask
-gunicorn
-requests
+psycopg[binary]
